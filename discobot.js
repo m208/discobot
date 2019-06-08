@@ -103,7 +103,7 @@ client.on("message", async message => {
 
 
 
-const guild = client.guilds.get('493882787875782657');
+const guild = client.guilds.get(config.guild);
 if (!guild) return console.log('Unable to find guild.');
 
 const channel = guild.channels.find(c => c.id === config.statusChannel && c.type === 'text');
@@ -113,7 +113,25 @@ try {
     const message = await channel.fetchMessage(config.statusMessage);
     if (!message) return console.log('Unable to find message.');
 
-    await message.edit('Test.');
+    
+	resString = 'текущие статусы:  \n';
+			await asyncQuerry(servers);
+			let timeStamp = new Date().toString().slice(16, 21);
+			resString += ' \n Обновлено: ' + timeStamp;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	await message.edit(resString);
     console.log('Done.');
 } catch(err) {
     console.error(err);
