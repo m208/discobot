@@ -39,6 +39,17 @@ client.on("guildDelete", guild => {
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
 function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -87,9 +98,9 @@ client.on("message", async message => {
 			}
 		
 	}
-  
-
-  
+  if(command === "ping") {
+let m = client.channels.get(config.statusChannel).message(config.statusMessage);
+  }
   /*
   
   if(command === "ping") {
