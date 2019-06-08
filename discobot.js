@@ -67,38 +67,6 @@ return offsetTime.toString().slice(16, 21);
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//client.login(config.token);
 // THIS  MUST  BE  THIS  WAY
 client.login(process.env.BOT_TOKEN);//BOT_TOKEN is the Client Secret
 
@@ -107,31 +75,8 @@ client.on("ready", () => {
   console.log(`Bot has started, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); 
   // Example of changing the bot's playing game to something useful. `client.user` is what the
   // docs refer to as the "ClientUser".
-  client.user.setActivity(`Serving ${client.guilds.size} servers`);
+  client.user.setPresence({ game: { name: 'Evgen`s FOnline', type: 0 } });
 });
-
-client.on("guildCreate", guild => {
-  // This event triggers when the bot joins a guild.
-  console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
-  client.user.setActivity(`Serving ${client.guilds.size} servers`);
-});
-
-client.on("guildDelete", guild => {
-  // this event triggers when the bot is removed from a guild.
-  console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
-  client.user.setActivity(`Serving ${client.guilds.size} servers`);
-});
-
-
-
-
-
-
-
-
-
-
-
 
 
 function timeout(ms) {
@@ -146,6 +91,21 @@ client.on("message", async message => {
   // and not get into a spam loop (we call that "botception").
   if(message.author.bot) return;
   
+  	
+	// anti mat
+	
+	let agro = badwords.words.some(word => message.content.includes(word));
+	if(agro) { 
+		message.delete();
+		//message.reply('Mat'); 
+	}
+  
+  // un used till
+  
+  
+  /*
+  
+  
   // Also good practice to ignore any message that does not start with our prefix, 
   // which is set in the configuration file.
   //if(message.content.indexOf(config.prefix) !== 0) return;
@@ -159,23 +119,13 @@ client.on("message", async message => {
   
   // Let's go with a few common example commands! Feel free to delete or change those.
   
-  let mat = badwords.words
-  //console.log(message.content);
-  
-  
-  let agro = mat.some(word => message.content.includes(word))
 
-  
-  if(agro) { 
-  message.delete();
-		message.reply('Mat'); 
-  }
   
   
     if(command === "greetings") {
 		let quote = getRandomMessage(greetings.greetings);
 		message.reply(quote); 
-  }
+	}
   
   	if(command === "status"){
 		
@@ -198,7 +148,7 @@ client.on("message", async message => {
 		
 	}
 
-  /*
+  
   
   if(command === "ping") {
     // Calculates ping between sending a message and editing it, giving a nice round-trip latency.
@@ -291,6 +241,11 @@ client.on("message", async message => {
 client.on('error', console.error);
 
 
+//-------------------------------------------------------------------
+//			 GREETINGS 				------
+//-------------------------------------------------------------------
+
+/*
 client.on("guildMemberAdd", member => { 
 	let guildChannel = member.guild.channels.find(channel => channel.id === 'config.defaultChannel'); 
 	if(!guildChannel) { return } 
@@ -298,7 +253,7 @@ client.on("guildMemberAdd", member => {
 	let quote = getRandomMessage(greetings.greetings);
 	guildChannel.send(''+member.user+' '+quote+'').catch(console.error);
 });
-//493882788307664897
+*/
 
 
 function getRandomMessage(arr) {
@@ -310,46 +265,26 @@ async function connectServer(host, port, name){
 	
 	return new Promise(function(resolve, reject) {
 		
-	let socket = new net.Socket();
-	
+		let socket = new net.Socket();
 
-	
-	
-	
-	
-	
-	
-	
-	/*
-	socket.setTimeout(1000, function(data) {
-		socket.destroy();
-		results[name] = [-1]; //timeout
-		resolve('timeout');
-	});
-	*/
-	socket.connect(port, host, function() {
-		socket.write(sendMsg);
-	});
+		socket.connect(port, host, function() {
+			socket.write(sendMsg);
+		});
 		
-	socket.setTimeout(1000);
-		socket.on('timeout', () => {
-		//console.log('socket timeout');
-		results[name] = [-1]; //timeout
-		socket.end();
-		resolve('ok');
-	});
-		
-	socket.on('error', function(err){
-		//console.log("Error: "+err.message);
-		socket.end();
-		resolve('ok');
-	});
-		
-		
-		
-		
-		//console.log('CONNECTED TO: ' + host + ':' + port);
-		//socket.write(sendMsg);
+		socket.setTimeout(1000);
+			socket.on('timeout', () => {
+			//console.log('socket timeout');
+			results[name] = [-1]; //timeout
+			socket.end();
+			resolve('ok');
+		});
+			
+		socket.on('error', function(err){
+			//console.log("Error: "+err.message);
+			socket.end();
+			resolve('ok');
+		});
+
 		socket.on('data', function(data) {
 			let ppl =  data.readUIntLE(0, 3);
 			let upTimeOfset = data.slice(4,7);
@@ -362,11 +297,7 @@ async function connectServer(host, port, name){
 			socket.end();
 			resolve('ok');
 		});
-	
-
 	});
-
-
 }
 
 
@@ -396,7 +327,6 @@ function sortResults(){
 			var txt = (ppl>=0) ? (''+name+': онлайн: '+ppl+', аптайм: '+upTime+'') : ''+name+' : offline';
 			var okSymbol = (ppl>=0) ? '+' : '-';
 			resString +=('```diff\n'+okSymbol+''+txt+'\n```');
-			
 		}
 		//console.log(resString); 
 }
@@ -411,7 +341,6 @@ function secToDays(sec){
 	}else if (hrs > 0){
 		return (hrs + ' ч') ;
 	}else return (min + ' мин');	
-
 }
 
 
