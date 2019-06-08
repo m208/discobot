@@ -15,13 +15,17 @@ let results = [];
 
 
 
-const guild = client.guilds.get(config.guild);
+
+
+async function mainLoop(){
+	const guild = client.guilds.get(config.guild);
 if (!guild) return console.log('Unable to find guild.');
 
 const channel = guild.channels.find(c => c.id === config.statusChannel && c.type === 'text');
 if (!channel) return console.log('Unable to find channel.');
-
-async function mainLoop(){
+	
+	
+	
 while (1){
 
 
