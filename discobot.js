@@ -64,7 +64,7 @@ client.on("message", async message => {
 	}
   
     if(message.content === "+say") {
-		const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+		const args = message.content.split(/ +/g);
 		const sayMessage = args.join(" ");
         message.delete().catch(O_o=>{}); 
         message.channel.send(sayMessage);
