@@ -1,0 +1,10 @@
+{
+	"Fonline2" 			: 	[	"game.fonline2.com",			"4000", 	"http://fonline2.com" 						],
+	"Reloaded" 			: 	[	"play.fonline-reloaded.net", 	"2238", 	"http://fonline-reloaded.net"				],
+	"Requiem" 			: 	[	"81.177.6.218", 				"6112", 	"http://www.fallout-requiem.ru" 			],
+	"NextDay" 			: 	[	"213.108.75.104", 				"16350", 	"http://www.fonextday.ru/fallout-next-day/"	],
+	"Ashes of Phoenix" 	:  	[	"play.fonline-aop.net", 		"4000", 	"http://fonline-aop.net/" 					],
+	"Goon Haven" 		:  	[	"217.144.172.230", 				"5568", 	"http://tmh.ixbb.ru/" 						],
+	"FO RP" 			:  	[	"207.154.212.89", 				"4000", 	"https://frp.su/" 							],
+	"Fo4You" 			:	[	"31.134.161.166", 				"4000", 	"https://vk.com/club43806977" 				]
+}
