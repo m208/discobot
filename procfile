@@ -1,1 +1,1 @@
-web: node discobot.js
+worker: node discobot.js
