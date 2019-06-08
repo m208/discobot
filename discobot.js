@@ -35,12 +35,12 @@ try {
    
 	resString = 'текущие статусы:  \n';
 			await asyncQuerry(servers);
-			let timeStamp = new Date().toString().slice(16, 21);
+			let timeStamp = getTimeStamp();
 			resString += ' \n Обновлено: ' + timeStamp;
 	
 
 	await message.edit(resString);
-    console.log('Done.');
+    console.log('Info updated.' + timeStamp);
 } catch(err) {
     console.error(err);
 }
@@ -52,16 +52,17 @@ await timeout(config.delay*1000);
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`);
-  
   mainLoop();
-  
-  
-  
-  
 });
 
 
-
+function getTimeStamp(){
+let date = new Date()
+let timeZone = 3; // +3.00
+let tzDifference = timeZone * 60 + date.getTimezoneOffset();
+let offsetTime = new Date(date.getTime() + tzDifference * 60 * 1000);
+return offsetTime.toString().slice(16, 21);
+}
 
 
 
@@ -292,12 +293,13 @@ function getRandomMessage(arr) {
 }
 
 async function connectServer(host, port, name){
-	const sendMsg = new Buffer([0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF]);
+	//const sendMsg = new Buffer([0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF]);
+	const sendMsg = Buffer.alloc(5, '0xFFFFFFFF');
 	try {
 	return new Promise(function(resolve, reject) {
 		
 	let socket = new net.Socket();
-	socket.setTimeout(900, function(data) {
+	socket.setTimeout(1000, function(data) {
 		socket.destroy();
 		results[name] = [-1]; //timeout
 		resolve('timeout');
@@ -308,6 +310,8 @@ async function connectServer(host, port, name){
 		socket.write(sendMsg);
 		socket.on('data', function(data) {
 			let ppl =  data.readUIntLE(0, 3);
+			let upTimeOfset = data.slice(4,7);
+			let upTime = secToDays(upTimeOfset.readUIntLE(0, 3));
 			//let upTime = secToDays(data.readUIntLE(4, 7));
 			let upTime = 0;
 			results[name] = [ppl, upTime];
