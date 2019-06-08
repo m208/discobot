@@ -313,7 +313,7 @@ async function connectServer(host, port, name){
 			let upTimeOfset = data.slice(4,7);
 			let upTime = secToDays(upTimeOfset.readUIntLE(0, 3));
 			//let upTime = secToDays(data.readUIntLE(4, 7));
-			let upTime = 0;
+			
 			results[name] = [ppl, upTime];
 			//console.log(': онлайн: ', ppl, ', аптайм: ', upTime ); 
 			socket.end();
