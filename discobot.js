@@ -72,8 +72,8 @@ client.on("message", async message => {
   }
   
   	if(command === "status"){
-		message.reply('ye');
-		if(!message.member.hasPermission("ADMINISTRATOR")) return;
+		
+	//	if(!message.member.hasPermission("ADMINISTRATOR")) return;
 		
 		const m = await message.channel.send('секундочку...');
 	
