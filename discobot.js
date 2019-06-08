@@ -318,16 +318,17 @@ async function connectServer(host, port, name){
 		socket.write(sendMsg);
 	});
 		
-			socket.setTimeout(1000);
+	socket.setTimeout(1000);
 		socket.on('timeout', () => {
 		console.log('socket timeout');
 		results[name] = [-1]; //timeout
 		socket.end();
 	});
 		
-		socket.on('error', function(err){
-    console.log("Error: "+err.message);
-})
+	socket.on('error', function(err){
+		console.log("Error: "+err.message);
+		socket.end();
+	});
 		
 		
 		
