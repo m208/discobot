@@ -293,31 +293,50 @@ function getRandomMessage(arr) {
 }
 
 async function connectServer(host, port, name){
-	//const sendMsg = new Buffer([0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF]);
 	const sendMsg = Buffer.alloc(4, 0xFFFFFFFF);
 	try {
 	return new Promise(function(resolve, reject) {
 		
 	let socket = new net.Socket();
+	
+
+	
+	
+	
+	
+	
+	
+	
+	/*
 	socket.setTimeout(1000, function(data) {
 		socket.destroy();
 		results[name] = [-1]; //timeout
 		resolve('timeout');
 	});
-	
+	*/
 	socket.connect(port, host, function() {
+		
+			socket.setTimeout(1000);
+		socket.on('timeout', () => {
+		console.log('socket timeout');
+		results[name] = [-1]; //timeout
+		socket.end();
+	});
+		
+		
+		
+		
+		
+		
 		//console.log('CONNECTED TO: ' + host + ':' + port);
 		socket.write(sendMsg);
 		socket.on('data', function(data) {
 			let ppl =  data.readUIntLE(0, 3);
 			let upTimeOfset = data.slice(4,7);
 			let upTime = secToDays(upTimeOfset.readUIntLE(0, 3));
-			//let upTime = secToDays(data.readUIntLE(4, 7));
-			
 			results[name] = [ppl, upTime];
 			//console.log(': онлайн: ', ppl, ', аптайм: ', upTime ); 
 			socket.end();
-			
 		});
 		socket.on('end', function() {
 			socket.end();
