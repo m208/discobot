@@ -9,6 +9,8 @@ const config = require("./config.json");
 
 const servers = require("./servers.json");
 const greetings = require("./greetings.json");
+const badwords = require("./badwords.json");
+let bw = badwords.words;
 
 let resString = '';
 let results = [];
@@ -33,7 +35,7 @@ try {
     const message = await channel.fetchMessage(config.statusMessage);
     if (!message) return console.log('Unable to find message.');
    
-	resString = 'текущие статусы:  \n';
+	resString = 'Текущие статусы:  \n';
 			await asyncQuerry(servers);
 			let timeStamp = getTimeStamp();
 			resString += ' \n Обновлено: ' + timeStamp;
@@ -157,6 +159,9 @@ client.on("message", async message => {
   
   // Let's go with a few common example commands! Feel free to delete or change those.
   
+  if(badwords.words.includes(message.content)) { 
+		message.reply('Mat'); 
+  }
   
   
     if(command === "greetings") {
@@ -320,14 +325,14 @@ async function connectServer(host, port, name){
 		
 	socket.setTimeout(1000);
 		socket.on('timeout', () => {
-		console.log('socket timeout');
+		//console.log('socket timeout');
 		results[name] = [-1]; //timeout
 		socket.end();
 		resolve('ok');
 	});
 		
 	socket.on('error', function(err){
-		console.log("Error: "+err.message);
+		//console.log("Error: "+err.message);
 		socket.end();
 		resolve('ok');
 	});
