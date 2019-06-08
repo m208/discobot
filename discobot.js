@@ -99,7 +99,42 @@ client.on("message", async message => {
 		
 	}
   if(command === "ping") {
-let m = client.channels.get(config.statusChannel).message(config.statusMessage);
+//let m = client.channels.get(config.statusChannel).message(config.statusMessage);
+
+
+
+const guild = bot.guilds.get('493882787875782657');
+if (!guild) return console.log('Unable to find guild.');
+
+const channel = guild.channels.find(c => c.id === config.statusChannel && c.type === 'text');
+if (!channel) return console.log('Unable to find channel.');
+
+try {
+    const message = await channel.fetchMessage(config.statusMessage);
+    if (!message) return console.log('Unable to find message.');
+
+    await message.edit('Test.');
+    console.log('Done.');
+} catch(err) {
+    console.error(err);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   }
   /*
   
