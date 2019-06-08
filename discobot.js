@@ -183,62 +183,7 @@ client.on("message", async message => {
 		//	}
 		
 	}
-  if(command === "ping") {
-//let m = client.channels.get(config.statusChannel).message(config.statusMessage);
-/*
 
-
-const guild = client.guilds.get(config.guild);
-if (!guild) return console.log('Unable to find guild.');
-
-const channel = guild.channels.find(c => c.id === config.statusChannel && c.type === 'text');
-if (!channel) return console.log('Unable to find channel.');
-
-try {
-    const message = await channel.fetchMessage(config.statusMessage);
-    if (!message) return console.log('Unable to find message.');
-
-    
-	resString = 'текущие статусы:  \n';
-			await asyncQuerry(servers);
-			let timeStamp = new Date().toString().slice(16, 21);
-			resString += ' \n Обновлено: ' + timeStamp;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	await message.edit(resString);
-    console.log('Done.');
-} catch(err) {
-    console.error(err);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-*/
-
-  }
   /*
   
   if(command === "ping") {
@@ -348,35 +293,39 @@ function getRandomMessage(arr) {
 
 async function connectServer(host, port, name){
 	const sendMsg = new Buffer([0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF]);
-	
+	try {
 	return new Promise(function(resolve, reject) {
 		
-	let client = new net.Socket();
-	client.setTimeout(900, function(data) {
-		client.destroy();
+	let socket = new net.Socket();
+	socket.setTimeout(900, function(data) {
+		socket.destroy();
 		results[name] = [-1]; //timeout
 		resolve('timeout');
 	});
 	
-	client.connect(port, host, function() {
+	socket.connect(port, host, function() {
 		//console.log('CONNECTED TO: ' + host + ':' + port);
-		client.write(sendMsg);
-		client.on('data', function(data) {
+		socket.write(sendMsg);
+		socket.on('data', function(data) {
 			let ppl =  data.readUIntLE(0, 3);
 			//let upTime = secToDays(data.readUIntLE(4, 7));
 			let upTime = 0;
 			results[name] = [ppl, upTime];
 			//console.log(': онлайн: ', ppl, ', аптайм: ', upTime ); 
-			client.end();
+			socket.end();
 			
 		});
-		client.on('end', function() {
-			client.end();
+		socket.on('end', function() {
+			socket.end();
 			resolve('ok');
 		});
 	});
 
 	});
+
+} catch(err) {
+    console.error(err);
+}
 }
 
 
