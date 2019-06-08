@@ -14,6 +14,75 @@ let resString = '';
 let results = [];
 
 
+
+const guild = client.guilds.get(config.guild);
+if (!guild) return console.log('Unable to find guild.');
+
+const channel = guild.channels.find(c => c.id === config.statusChannel && c.type === 'text');
+if (!channel) return console.log('Unable to find channel.');
+
+
+while (1){
+
+
+try {
+    const message = await channel.fetchMessage(config.statusMessage);
+    if (!message) return console.log('Unable to find message.');
+   
+	resString = 'текущие статусы:  \n';
+			await asyncQuerry(servers);
+			let timeStamp = new Date().toString().slice(16, 21);
+			resString += ' \n Обновлено: ' + timeStamp;
+	
+
+	await message.edit(resString);
+    console.log('Done.');
+} catch(err) {
+    console.error(err);
+}
+
+await timeout(config.delay*1000);
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //client.login(config.token);
 // THIS  MUST  BE  THIS  WAY
 client.login(process.env.BOT_TOKEN);//BOT_TOKEN is the Client Secret
@@ -88,19 +157,23 @@ client.on("message", async message => {
 		
 		const m = await message.channel.send('секундочку...');
 	
-			while (1){
+		//	while (1){
 			resString = 'текущие статусы:  \n';
 			await asyncQuerry(servers);
 			let timeStamp = new Date().toString().slice(16, 21);
 			resString += ' \n Обновлено: ' + timeStamp;
-			m.edit(resString);
-			await timeout(config.delay*1000);
-			}
+		//	m.edit(resString);
+		
+		message.reply(resString); 
+		
+		
+		//	await timeout(config.delay*1000);
+		//	}
 		
 	}
   if(command === "ping") {
 //let m = client.channels.get(config.statusChannel).message(config.statusMessage);
-
+/*
 
 
 const guild = client.guilds.get(config.guild);
@@ -151,7 +224,7 @@ try {
 
 
 
-
+*/
 
   }
   /*
