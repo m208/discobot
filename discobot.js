@@ -103,7 +103,7 @@ client.on("message", async message => {
 
 
 
-const guild = bot.guilds.get('493882787875782657');
+const guild = client.guilds.get('493882787875782657');
 if (!guild) return console.log('Unable to find guild.');
 
 const channel = guild.channels.find(c => c.id === config.statusChannel && c.type === 'text');
