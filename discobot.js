@@ -21,7 +21,7 @@ if (!guild) return console.log('Unable to find guild.');
 const channel = guild.channels.find(c => c.id === config.statusChannel && c.type === 'text');
 if (!channel) return console.log('Unable to find channel.');
 
-
+async function mainLoop(){
 while (1){
 
 
@@ -44,9 +44,17 @@ try {
 await timeout(config.delay*1000);
 
 }
+}
 
-
-
+client.on('ready', () => {
+  console.log(`Logged in as ${client.user.tag}!`);
+  
+  mainLoop();
+  
+  
+  
+  
+});
 
 
 
