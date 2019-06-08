@@ -294,7 +294,7 @@ function getRandomMessage(arr) {
 
 async function connectServer(host, port, name){
 	const sendMsg = Buffer.alloc(4, 0xFFFFFFFF);
-	try {
+	
 	return new Promise(function(resolve, reject) {
 		
 	let socket = new net.Socket();
@@ -323,11 +323,13 @@ async function connectServer(host, port, name){
 		console.log('socket timeout');
 		results[name] = [-1]; //timeout
 		socket.end();
+		resolve('ok');
 	});
 		
 	socket.on('error', function(err){
 		console.log("Error: "+err.message);
 		socket.end();
+		resolve('ok');
 	});
 		
 		
@@ -351,9 +353,7 @@ async function connectServer(host, port, name){
 
 	});
 
-} catch(err) {
-    console.error(err);
-}
+
 }
 
 
