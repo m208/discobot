@@ -159,7 +159,9 @@ client.on("message", async message => {
   
   // Let's go with a few common example commands! Feel free to delete or change those.
   
-  if(badwords.words.includes(message.content)) { 
+  let mat = badwords.words
+  console.log(message.content);
+  if(mat.includes(message.content)) { 
 		message.reply('Mat'); 
   }
   
