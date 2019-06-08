@@ -14,7 +14,9 @@ let resString = '';
 let results = [];
 
 
-client.login(config.token);
+//client.login(config.token);
+// THIS  MUST  BE  THIS  WAY
+client.login(process.env.BOT_TOKEN);//BOT_TOKEN is the Client Secret
 
 client.on("ready", () => {
   // This event will run if the bot starts, and logs in, successfully.
