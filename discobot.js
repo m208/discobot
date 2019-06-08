@@ -315,6 +315,8 @@ async function connectServer(host, port, name){
 	});
 	*/
 	socket.connect(port, host, function() {
+		socket.write(sendMsg);
+	});
 		
 			socket.setTimeout(1000);
 		socket.on('timeout', () => {
@@ -323,13 +325,15 @@ async function connectServer(host, port, name){
 		socket.end();
 	});
 		
-		
+		socket.on('error', function(err){
+    console.log("Error: "+err.message);
+})
 		
 		
 		
 		
 		//console.log('CONNECTED TO: ' + host + ':' + port);
-		socket.write(sendMsg);
+		//socket.write(sendMsg);
 		socket.on('data', function(data) {
 			let ppl =  data.readUIntLE(0, 3);
 			let upTimeOfset = data.slice(4,7);
@@ -342,7 +346,7 @@ async function connectServer(host, port, name){
 			socket.end();
 			resolve('ok');
 		});
-	});
+	
 
 	});
 
