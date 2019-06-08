@@ -63,11 +63,9 @@ client.on("message", async message => {
 		message.delete();
 	}
   
-    if(message.content === "+say") {
-		const args = message.content.split(/ +/g);
-		const sayMessage = args.join(" ");
+    if(message.content === "+helloworld") {
         message.delete().catch(O_o=>{}); 
-        message.channel.send(sayMessage);
+        message.channel.send('Привет гладкокожий');
 	}
   
   /*
