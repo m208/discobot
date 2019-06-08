@@ -294,7 +294,7 @@ function getRandomMessage(arr) {
 
 async function connectServer(host, port, name){
 	//const sendMsg = new Buffer([0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF]);
-	const sendMsg = Buffer.alloc(4, '0xFFFFFFFF');
+	const sendMsg = Buffer.alloc(4, 0xFFFFFFFF);
 	try {
 	return new Promise(function(resolve, reject) {
 		
