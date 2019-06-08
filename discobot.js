@@ -214,7 +214,8 @@ async function connectServer(host, port, name){
 		client.write(sendMsg);
 		client.on('data', function(data) {
 			let ppl =  data.readUIntLE(0, 3);
-			let upTime = secToDays(data.readUIntLE(4, 7));
+			//let upTime = secToDays(data.readUIntLE(4, 7));
+			let upTime = 0;
 			results[name] = [ppl, upTime];
 			//console.log(': онлайн: ', ppl, ', аптайм: ', upTime ); 
 			client.end();
