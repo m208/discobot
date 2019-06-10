@@ -27,17 +27,17 @@ async function mainLoop(){
 	const channel = guild.channels.find(c => c.id === config.statusChannel && c.type === 'text');
 	if (!channel) return console.log('Unable to find channel.');
 	
+	const message = await channel.fetchMessage(config.statusMessage);
+	if (!message) return console.log('Unable to find message.');
+	
 	while (1){
 		try {
-			const message = await channel.fetchMessage(config.statusMessage);
-			if (!message) return console.log('Unable to find message.');
-   
 			resString = 'Текущие статусы:  \n';
 			await asyncQuerry(servers);
 			let timeStamp = getTimeStamp();
 			resString += ' \n Обновлено: ' + timeStamp;
 			await message.edit(resString);
-			console.log('Info updated.' + timeStamp);
+			//console.log('Info updated.' + timeStamp);
 		} catch(err) {
 			console.error(err);
 		}
@@ -49,7 +49,7 @@ async function mainLoop(){
 
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}, with ${client.users.size} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); 
-	client.user.setPresence({ game: { name: 'Evgen`s FOnline', type: 0 } });
+	client.user.setPresence({ game: { name: config.activity, type: config.activityType } });
 	mainLoop();
 });
 
@@ -58,7 +58,7 @@ client.on('error', console.error);
 client.on("message", async message => {
   if(message.author.bot) return;
   	
-	let agro = badwords.words.some(word => message.content.includes(word));
+	let agro = badwords.words.some(word => message.content.toLowerCase().includes(word));
 	if(agro) { 
 		message.delete();
 	}

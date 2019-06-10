@@ -5,5 +5,8 @@
   "guild"			: "393479996288532480",
   "defaultChannel"	: "393479996741779468",
   "statusChannel"	: "584826159288811524",
-  "statusMessage"	: "587010068654850063"
+  "statusMessage"	: "587010068654850063",
+  "activity"		: "A kiss to build a dream on",
+  "activityType"	: "LISTENING"
+  
 }
