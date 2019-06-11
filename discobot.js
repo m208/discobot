@@ -49,6 +49,9 @@ async function mainLoop(){
 
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}, with ${client.users} users, in ${client.channels.size} channels of ${client.guilds.size} guilds.`); 
+	
+	
+	console.log(client.users[1]);
 	client.user.setPresence({ game: { name: config.activity, type: config.activityType } });
 	mainLoop();
 });
